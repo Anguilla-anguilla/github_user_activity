@@ -20,6 +20,8 @@ def get_user_information(username):
                     print(f'- created {payload["ref_type"]} for "{repo}" repo')
                 elif e_type == 'DeleteEvent':
                     print(f'- deleted {payload["ref_type"]} for "{repo}" repo')
+                elif e_type == 'ForkEvent':
+                    print(f' fork "{repo}" repo')
                 elif e_type == 'IssuesEvent':
                     print(f'- {payload["action"]} issue for "{repo}" repo')
                 elif e_type == 'PublicEvent':
