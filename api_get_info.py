@@ -12,11 +12,24 @@ def get_user_information(username):
 
         if len(json_data) > 0:
             print(f"{username}'s recent activity:")
-            print(json_data)
-            # for activity in json_data:
-            #     print('- ')gi
-        else:
-            print(f"No activities.")
+            for event in json_data:
+                e_type = event['type']
+                repo = event['repo']['name']
+                payload = event['payload']
+                if e_type == 'CreateEvent':
+                    print(f'- created {payload["ref_type"]} for "{repo}" repo')
+                elif e_type == 'DeleteEvent':
+                    print(f'- deleted {payload["ref_type"]} for "{repo}" repo')
+                elif e_type == 'IssuesEvent':
+                    print(f'- {payload["action"]} issue for "{repo}" repo')
+                elif e_type == 'PublicEvent':
+                    print(f'- made repository "{repo}" public.')
+                elif e_type == 'PullRequestEvent':
+                    print(f'- {payload["action"]} pull request for "{repo}" repo')
+                elif e_type == 'PushEvent':
+                    print(f'- pushed {len(payload["commits"])} commits for "{repo}" repo')
+                elif e_type == 'WatchEvent':
+                    print(f'- {payload["action"]} "{repo}" repo')
 
     except err.URLError as URL_err:
         print(f'URL error: {URL_err}')
